@@ -1,0 +1,86 @@
+
+$forecast-row-cell-width: 64px;
+
+
+.card-forecast {
+    width: 100%;
+
+    &__head {}
+    &__subhead {}
+
+    &__body {
+        flex-direction: column;
+    }
+
+    &__daily-temperature {
+        padding-left: 2.5rem;
+        width: 100%;
+    }
+
+    &__list-forecast {
+        display: flex;
+        flex-direction: column;
+        color: rgba(0, 0, 0, 0.8);
+    }
+}
+
+.row {
+    &-items {
+        width: 256px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .3rem 1rem;
+    }
+
+    &-items:hover {
+        // margin-top: 2px;
+        // margin-bottom: 2px;
+        background-color: #E0F7FA;
+    }
+}
+
+.item {
+    &-day {
+        width: 7%;
+        text-align: left;
+    }
+
+    &-date {
+        width: 23%;
+        text-align: right;
+    }
+
+    &-icon {
+        width: 15%;
+        text-align: center;
+        font-size: 22px;
+    }
+
+    &-icon--sun {
+        color: #FFDC00;
+    }
+
+    &-icon--rain {
+        color: #3366CC;
+    }
+
+    &-icon--storm {
+        color: #FF0000;
+    }
+
+    &-icon--cloud {
+        color: #7b7d7b;
+    }
+
+    &-high {
+        width: 10%;
+        text-align: right;
+    }
+
+    &-low {
+        width: 15%;
+        text-align: right;
+        color: rgba(0, 0, 0, 0.5);
+    }
+}
