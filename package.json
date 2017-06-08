@@ -11,7 +11,8 @@
   "scripts": {
     "start": "webpack-dev-server --hot --inline",
     "build": "rimraf dist && webpack && mv dist/*.eot dist/static/css/ && mv dist/*.woff* dist/static/css/ && mv dist/*.svg dist/static/css/ && mv dist/*.ttf dist/static/css/",
-    "reinstall": "npm i rimraf && rimraf node_modules && npm uninstall -g elm && npm i -g elm && npm i && elm package install"
+    "reinstall": "npm i rimraf && rimraf node_modules && npm uninstall -g elm && npm i -g elm && npm i && elm package install",
+    "deploy": "surge ~/projects/elm/elm-forecast/dist elm-forecast.surge.sh"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
@@ -38,6 +39,7 @@
     "webpack-merge": "^2.4.0"
   },
   "dependencies": {
+    "surge": "^0.19.0",
     "weather-icons": "git+https://github.com/erikflowers/weather-icons.git"
   }
 }

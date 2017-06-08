@@ -42,7 +42,7 @@ viewHeader model =
         , Layout.spacer
         , Layout.navigation []
             [ Layout.link
-                [ Layout.href "https://github.com/ondrej-tucek/elm-forecast-app" ]
+                [ Layout.href "https://github.com/ondrej-tucek/elm-forecast" ]
                 [ text "github" ]
             ]
         ]
