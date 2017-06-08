@@ -13,6 +13,7 @@ $ elm-package install
 $ npm start
 ```
 * Access app at `http://localhost:8080/`
+* Or deployed at [surge](http://elm-forecast.surge.sh/)
 
 
 ## License
