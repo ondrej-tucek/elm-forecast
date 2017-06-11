@@ -2,18 +2,20 @@
 
 A simple web app written in Elm.
 
+
 ### Install:
 ```
 $ npm install
-$ elm-package install
+$ elm-package install -y
 ```
 
-### Serve locally:
+### Launching app:
 ```
 $ npm start
 ```
+
 * Access app at `http://localhost:8080/`
-* Or deployed at [surge](http://elm-forecast.surge.sh/)
+* Or live [demo](http://elm-forecast.surge.sh/)
 
 
 ## License
