@@ -1,0 +1,62 @@
+
+// Usage:
+//  px2unit(20px, 640px); -> 0.03125em
+//  px2unit(20px, 640px, em); -> 0.03125em
+//  px2unit(20px, 640px, 100%); -> 3.125%
+//  px2unit(20, 640); -> 0.03125em
+//  px2unit(20, 640, em); -> 0.03125em
+//  px2unit(20, 640, 100%); -> 3.125%
+@function px2unit($target, $context: 16, $unit: em) {
+    @if $unit == 100% {
+        @return ($target / $context) * $unit;
+    } @else {
+        @return ($target / $context) + $unit;
+    }
+}
+
+
+// Usage:
+//  screen-size-to-em(640); -> 40em
+//  screen-size-to-em(640px, 32px); -> 20em
+@function screen-size-to-em($size-px, $unitValue-px: 16) {
+    @return px2unit($size-px, $unitValue-px, em);
+}
+
+
+// original code see
+// https://github.com/ryanburgess/SASS-Useful-Mixins
+// MIT © Ryan Burgess
+
+// Usage: let's say a div is 640px and you need 20px in padding converted to %.
+//  .your-class {
+//      ...
+//      @include px2unit-list(640, em, "padding", 20, 20, 20, 20);
+//      ...
+// }
+@mixin px2unit-list($context, $unit, $property, $values...) {
+    @if $context == none {
+        $context: 16;
+    }
+    @if $unit == none {
+        $unit: 100%;
+    }
+
+    $n: length($values);
+    $i: 1;
+
+    $unitlist: ();
+
+    @while $i <= $n {
+        $itemVal: (nth($values, $i));
+        @if $itemVal != "auto" {
+            $unitlist: append($unitlist, px2unit($itemVal, $context, $unit));
+            // $unitlist: append($unitlist, px2unit($context, $itemVal, $unit));
+        } @else {
+            $unitlist: append($unitlist, auto);
+        }
+
+        $i: $i + 1;
+    }
+
+    #{$property}: $unitlist;
+}

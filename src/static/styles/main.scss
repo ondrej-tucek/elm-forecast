@@ -1,10 +1,19 @@
-$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
-@import '~bootstrap-sass/assets/stylesheets/bootstrap/_mixins.scss';
-@import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
-// $icon-font-path: '../../node_modules/weather-icons/font/';
-$icon-font-path: '~weather-icons/font/';
-@import '~weather-icons/sass/weather-icons.scss';
+@import '~sass-mediaqueries/_media-queries.scss';
+@import '~normalize.css';
 
-@import 'card-forecast.scss';
-@import 'menu-tabs.scss';
+@import 'base/_base.scss';
+@import 'base/_typography.scss';
 
+@import 'components/_card-forecast.scss';
+@import 'components/_menu-tabs.scss';
+
+@import 'helpers/_variables.scss';
+@import 'helpers/_mixins.scss';
+
+@import 'layout/_mediaqueries.scss';
+
+@import 'partials/_anchors.scss';
+@import 'partials/_buttons.scss';
+@import 'partials/_inputs.scss';
+
+@import 'vendors/_bootstrap.scss';

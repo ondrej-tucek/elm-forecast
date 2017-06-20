@@ -1,9 +1,21 @@
+@import 'helpers/_mixins.scss';
+@import 'helpers/_variables.scss';
 
-$forecast-row-cell-width: 64px;
 
+$card-forecast-width: 288;
+$row-items-width: 258;
+
+$list-forecast-color: rgba(0, 0, 0, 0.8);
+$item-row-color: rgba(0, 0, 0, 0.5);
+
+.card-forecast__list-forecast {
+    width: 100%;
+}
 
 .card-forecast {
+    // width: px2unit($card-forecast-width);
     width: 100%;
+    margin: 0 auto;
 
     &__head {}
     &__subhead {}
@@ -13,24 +25,31 @@ $forecast-row-cell-width: 64px;
     }
 
     &__daily-temperature {
-        padding-left: 2.5rem;
         width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-around;
+        // padding-left: px2unit(36, 288, 100%);
+        // padding-right: px2unit(36, 288, 100%);
+        @include px2unit-list($card-forecast-width, 100%, "padding", 0, 36, 0, 36);
     }
 
     &__list-forecast {
         display: flex;
         flex-direction: column;
-        color: rgba(0, 0, 0, 0.8);
+        color: $list-forecast-color;
     }
 }
 
 .row {
     &-items {
-        width: 256px;
+        width: 100%;
         display: flex;
+        flex-direction: row wrap;
         justify-content: space-between;
         align-items: center;
-        padding: .3rem 1rem;
+        @include px2unit-list(none, em, "padding", 0, 8, 0, 8);
     }
 
     &-items:hover {
@@ -42,19 +61,20 @@ $forecast-row-cell-width: 64px;
 
 .item {
     &-day {
-        width: 7%;
+        width: 10%;
         text-align: left;
     }
 
     &-date {
-        width: 23%;
+        width: 25%;
         text-align: right;
     }
 
     &-icon {
         width: 15%;
         text-align: center;
-        font-size: 22px;
+        font-size: 20px;
+        padding-top: 2%;
     }
 
     &-icon--sun {
@@ -74,13 +94,13 @@ $forecast-row-cell-width: 64px;
     }
 
     &-high {
-        width: 10%;
+        width: 12%;
         text-align: right;
     }
 
     &-low {
-        width: 15%;
+        width: 12%;
         text-align: right;
-        color: rgba(0, 0, 0, 0.5);
+        color: $item-row-color;
     }
 }

@@ -10,6 +10,8 @@ import Html.Attributes exposing (class, style)
 import Model exposing (..)
 import View.CardForecast exposing (viewCardForecast)
 
+import Material.Grid as Grid exposing (align, offset, grid, cell, size, Device(..))
+
 
 viewMenuTabs : Model -> Html Msg
 viewMenuTabs model =
@@ -35,7 +37,7 @@ viewHeader : Model -> Html Msg
 viewHeader model =
     Layout.row
         [ Color.background (Color.color Color.Teal Color.S500) ]
-        [ Layout.title [ css "font-size" "28px" ] [ text "Forecast weather" ]
+        [ Layout.title [ css "font-size" "22px" ] [ text "Forecast weather" ]
         , Layout.spacer
         , Layout.navigation []
             [ Layout.link
@@ -49,15 +51,18 @@ viewTabsBody : Model -> Html Msg
 viewTabsBody model =
     case model.selectedMenuTab of
         0 ->
-            div []
-                [
-                  div [ class "body-tabs" ] [ viewCardForecast model ]
+            Options.div [ cs "body-tabs" ]
+                [ grid [ ]
+                    [ cell
+                        [ cs "forecast-card-container"
+                        , size All 4
+                        , size Tablet 4
+                        , size Phone 4
+                        ]
+                        [ viewCardForecast model ]
+                    ]
                 ]
-
         1 ->
-            div [ class "body-tabs" ] (List.map (\x -> text (toString x)) [List.take 8 model.forecast])
-
+            div [ class "forecast-card-container" ] (List.map (\x -> text (toString x)) [List.take 8 model.forecast])
         _ ->
             text "404"
-
-

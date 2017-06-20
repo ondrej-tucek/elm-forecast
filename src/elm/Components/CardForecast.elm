@@ -107,4 +107,3 @@ weeklyForecast model =
                   )
     in
         List.map getDailyData listWeeklyForecast
-
