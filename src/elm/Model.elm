@@ -19,6 +19,8 @@ type Msg
     | SelectMenuTab Int
     | FetchForecastData (Result Http.Error ForecastList)
     | UpdateTime Time
+    | Increase Int
+    | Decrease Int
     | NoOp
 
 
@@ -36,6 +38,7 @@ type alias Model =
   , notice : Maybe String
 
   -- others..
+  , quantity : Int
   }
 
 
@@ -54,6 +57,7 @@ model =
   , notice = Nothing
 
   -- others..
+  , quantity = 1
   }
 
 

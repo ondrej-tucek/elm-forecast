@@ -47,6 +47,12 @@ update msg model =
             , Cmd.none
             )
 
+        Increase num ->
+            ( { model | quantity = model.quantity + num }, Cmd.none )
+
+        Decrease num ->
+            ( { model | quantity = model.quantity - num }, Cmd.none )
+
         -- NoOp
         -- return the current model
         NoOp ->

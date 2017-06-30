@@ -1,0 +1,47 @@
+
+
+.dialog {
+    &-quantity {
+        &__view {
+            top: 20%;
+            width: 100%;
+            // height: 400px;
+            text-align: left;
+            background-color: lightcyan;
+        }
+        &__title {
+            text-align: left;
+            background-color: lightsalmon;
+        }
+        &__content {
+            text-align: left;
+            background-color: lightblue;
+        }
+        &__actions {
+            text-align: left;
+            background-color: lightcoral;
+        }
+    }
+
+    &-two {
+        &__view {
+            width: 400px;
+            height: 328px;
+            text-align: left;
+            background-color: #BF360C;
+        }
+        &__title {
+            text-align: left;
+            background-color: #E64A19;
+        }
+        &__content {
+            height: 62%;
+            text-align: left;
+            background-color: #FF8A65;
+        }
+        &__actions {
+            text-align: left;
+            background-color: #FFCCBC;
+        }
+    }
+}

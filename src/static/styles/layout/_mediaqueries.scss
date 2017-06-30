@@ -6,10 +6,11 @@
 
 $border-card-color: #337AB7;
 $border-line: solid;
-$border-width: px2unit(2);
+$border-width: px2unit(3);
 
 $forecast-card-container-w: px2unit($card-forecast-width + 100);
 $cfw: px2unit($card-forecast-width);
+$dqw: px2unit(500);
 
 @include screen(
     screen-size-to-em($size-320px),
@@ -36,6 +37,14 @@ $cfw: px2unit($card-forecast-width);
         .card-forecast {
             width: $cfw;
         }
+
+        .dialog {
+            &-quantity {
+                &__view {
+                    width: $dqw;
+                }
+            }
+        }
      }
 
 @include screen(
@@ -52,7 +61,15 @@ $cfw: px2unit($card-forecast-width);
         .card-forecast {
             width: $cfw;
         }
-}
+
+        .dialog {
+            &-quantity {
+                &__view {
+                    width: $dqw;
+                }
+            }
+        }
+    }
 
 @include min-screen(
     screen-size-to-em($size-1920px)
@@ -67,4 +84,12 @@ $cfw: px2unit($card-forecast-width);
         .card-forecast {
             width: $cfw;
         }
-}
+
+        .dialog {
+            &-quantity {
+                &__view {
+                    width: $dqw;
+                }
+            }
+        }
+    }
