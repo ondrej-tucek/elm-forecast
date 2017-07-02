@@ -117,6 +117,10 @@ if ( TARGET_ENV === 'production' ) {
     plugins: [
       new CopyWebpackPlugin([
         {
+          from: 'src/static/assets/',
+          to:   'static/assets/'
+        },
+        {
           from: 'src/static/img/',
           to:   'static/img/'
         },
