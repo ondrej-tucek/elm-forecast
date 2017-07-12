@@ -1,10 +1,15 @@
 module Update exposing (..)
 
 import Material
+import Material.Helpers exposing (cmd)
 
 import Model exposing (Model, Msg(..), Mdl)
 import HttpUtils.HttpErrors exposing (..)
 import HttpUtils.RestApi exposing (..)
+
+import Forecast.Temperature exposing (..)
+import Ports exposing (..)
+
 
 
 -- update
@@ -16,7 +21,14 @@ update msg model =
             Material.update Mdl msg_ model
 
         SelectMenuTab num ->
-            { model | selectedMenuTab = num } ! []
+            let
+                model_ =
+                    { model | selectedMenuTab = num }
+
+                cmd_ =
+                    if num == 0 then getTemperaturesData model.temperaturesData else Cmd.none
+            in
+                ( model_, cmd_ )
 
         UpdateTime time ->
             { model | lastUpdateTime = time } ! [ fetchForecastData ]
@@ -30,8 +42,13 @@ update msg model =
             ( { model
                 | forecast = results.forecastList
                 , notice = Nothing
+                , temperaturesData = getData results [ "date", "high", "low", "text" ]
               }
-            , Cmd.none
+            , ( cmd
+                <| TemperaturesData
+                <| getData results [ "date", "high", "low", "text" ]
+              )
+              --Cmd.none
             )
 
         -- FetchFail
@@ -53,8 +70,12 @@ update msg model =
         Decrease num ->
             ( { model | quantity = model.quantity - num }, Cmd.none )
 
+        TemperaturesData data_ ->
+            ( { model | temperaturesData = data_ }, (getTemperaturesData data_) )
+
         -- NoOp
         -- return the current model
         NoOp ->
             ( model, Cmd.none )
 
+-- temperaturesData <| getData model ["date", "high", "low", "text"]

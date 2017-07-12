@@ -8,8 +8,8 @@ import Material
 import Types.Forecast exposing (Forecast, ForecastList)
 
 
--- Msgs
 
+-- Msgs
 
 type alias Mdl =
     Material.Model
@@ -21,6 +21,7 @@ type Msg
     | UpdateTime Time
     | Increase Int
     | Decrease Int
+    | TemperaturesData (List (List String))
     | NoOp
 
 
@@ -36,6 +37,7 @@ type alias Model =
   , lastUpdateTime : Time
   , forecast : List Forecast
   , notice : Maybe String
+  , temperaturesData : List (List String)
 
   -- others..
   , quantity : Int
@@ -55,6 +57,7 @@ model =
   , lastUpdateTime = 0.0
   , forecast = []
   , notice = Nothing
+  , temperaturesData = []
 
   -- others..
   , quantity = 1

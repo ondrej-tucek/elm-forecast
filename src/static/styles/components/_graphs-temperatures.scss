@@ -1,0 +1,32 @@
+@import 'helpers/_mixins.scss';
+@import 'helpers/_variables.scss';
+
+
+// $width-graph: px2unit(320);
+// $hight-graph: px2unit(240);
+// $border-width: px2unit(2);
+$width-graph: 320px;
+$hight-graph: 240px;
+$border-width: 2px;
+
+$border-card-color: black;
+$border-line: solid;
+
+.graphs {
+    @include px2unit-list($size-1920px, 100%, "margin", 30, 400, auto);
+    // margin: 10px 400px auto;
+    // padding: 10px 10px auto;
+    width: $width-graph + $border-width+$border-width;
+    height: $hight-graph + $border-width+$border-width;
+    border: $border-width $border-line $border-card-color;
+}
+
+#lineGraph1 {
+    width: $width-graph;
+    height: $hight-graph;
+}
+
+#barGraph1 {
+    width: $width-graph;
+    height: $hight-graph;
+}

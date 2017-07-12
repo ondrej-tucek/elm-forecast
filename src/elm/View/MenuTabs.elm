@@ -1,11 +1,9 @@
 module View.MenuTabs exposing (..)
 
 import Material.Color as Color
-import Material.Button as Button
-import Material.Dialog as Dialog
 import Material.Layout as Layout
-import Material.Elevation as Elevation
 import Material.Options as Options exposing (cs, css)
+import Material.Grid as Grid exposing (align, offset, grid, cell, size, Device(..))
 
 import Html exposing (..)
 import Html.Attributes exposing (class, style)
@@ -15,7 +13,6 @@ import View.CardForecast exposing (viewCardForecast)
 import View.ButtonQuantity exposing (viewButtonQuantity)
 import View.DialogQuantity exposing (viewDialogQuantity)
 
-import Material.Grid as Grid exposing (align, offset, grid, cell, size, Device(..))
 
 
 viewMenuTabs : Model -> Html Msg
@@ -27,7 +24,7 @@ viewMenuTabs model =
         , Layout.selectedTab model.selectedMenuTab
         ]
         { header = [ viewHeader model ]
-        , drawer = []
+        , drawer = [ ]
         , tabs =
             ( [ text "Pure"
               , text "Hell"
@@ -67,6 +64,19 @@ viewTabsBody model =
                         , size Phone 4
                         ]
                         [ viewCardForecast model ]
+                    , cell [ size All 4
+                        , size Tablet 4
+                        , size Phone 4
+                        ]
+                        [ Options.div [cs "graphs" ]
+                            [ Options.div[ Options.id "lineGraph1" ]
+                                [ ]
+                            ]
+                        , Options.div [cs "graphs" ]
+                            [ Options.div[ Options.id "barGraph1" ]
+                                [ ]
+                            ]
+                        ]
                     ]
                 ]
         1 ->

@@ -12,7 +12,7 @@ import HttpUtils.RestApi exposing (fetchForecastData)
 main : Program Never Model Msg
 main =
     Html.program
-        { init = ( model, fetchForecastData )
+        { init = ( model, Cmd.batch [ fetchForecastData ] )
         , view = view
         , update = update
         , subscriptions = subscriptions
