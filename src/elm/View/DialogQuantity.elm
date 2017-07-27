@@ -3,16 +3,17 @@ module View.DialogQuantity exposing (..)
 import Material.Color as Color
 import Material.Button as Button
 import Material.Dialog as Dialog
-import Material.Elevation as Elevation
 import Material.Options as Options exposing (cs, css)
 
 import Html exposing (..)
 
 import Model exposing (..)
-import View.ButtonQuantity exposing (viewButtonQuantity)
+import Constants.Colors exposing (..)
+import Constants.DefaultSettings exposing (..)
+import View.ButtonQuantity exposing (viewCounter)
 
 
-elevation = Elevation.e6
+elevation = defaultBtnElevation
 
 
 viewDialogQuantity : Model -> Html Msg
@@ -30,15 +31,15 @@ viewDialogQuantity model =
 dialog : Model -> Html Msg
 dialog model =
     let
-        btnBgColor = Color.background (Color.color Color.Indigo Color.S400)
-        btnTextColor = Color.text (Color.white)
+        btnBgColor = Color.background defaultBtnBgColor
+        btnTextColor = Color.text defaultBtnTextColor
     in
         Dialog.view
             [ cs "dialog-quantity__view" ]
             [ Dialog.title [ cs "dialog-quantity__title"]
                 [ text "Select Quantity" ]
             , Dialog.content [ cs "dialog-quantity__content" ]
-                [ viewButtonQuantity model ]
+                [ viewCounter model ]
             , Dialog.actions [ cs "dialog-quantity__actions" ]
                 [ Button.render Mdl [0] model.mdl
                     [ elevation

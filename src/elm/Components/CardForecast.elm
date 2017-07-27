@@ -87,7 +87,7 @@ currentDayForecast model str =
             _ -> ""
 
 
-weeklyForecast : Model -> List (String, String, String, String, Float, Float)
+weeklyForecast : Model -> List (Int, String, String, String, String, Float, Float)
 weeklyForecast model =
     let
         weekly = List.tail model.forecast
@@ -97,7 +97,8 @@ weeklyForecast model =
                 Nothing -> []
 
         getDailyData =
-            \x -> (
+            \dayId x -> (
+                    dayId + 1,
                     x.day,
                     dropZero <| getDayMonth x.date,
                     mapWeatherIcon x.code,
@@ -105,5 +106,16 @@ weeklyForecast model =
                     Result.withDefault 1000 (String.toFloat x.high),
                     Result.withDefault -1000 (String.toFloat x.low)
                   )
+
+        -- getDailyData =
+        --     \x -> (
+        --             x.day,
+        --             dropZero <| getDayMonth x.date,
+        --             mapWeatherIcon x.code,
+        --             mapColorIcon x.code,
+        --             Result.withDefault 1000 (String.toFloat x.high),
+        --             Result.withDefault -1000 (String.toFloat x.low)
+        --           )
     in
-        List.map getDailyData listWeeklyForecast
+        -- List.map getDailyData listWeeklyForecast
+        List.indexedMap getDailyData listWeeklyForecast

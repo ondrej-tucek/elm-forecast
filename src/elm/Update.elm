@@ -7,8 +7,9 @@ import Model exposing (Model, Msg(..), Mdl)
 import HttpUtils.HttpErrors exposing (..)
 import HttpUtils.RestApi exposing (..)
 
-import Forecast.Temperature exposing (..)
 import Ports exposing (..)
+import Forecast.Temperature exposing (..)
+import Constants.DefaultSettings exposing (..)
 
 
 
@@ -26,7 +27,7 @@ update msg model =
                     { model | selectedMenuTab = num }
 
                 cmd_ =
-                    if num == 0 then getTemperaturesData model.temperaturesData else Cmd.none
+                    if num == 0 then sendDataToGraphs model.temperaturesData else Cmd.none
             in
                 ( model_, cmd_ )
 
@@ -39,16 +40,17 @@ update msg model =
         -- define a notice.
         -- set the isLoading state to False
         FetchForecastData (Ok results) ->
+        let
+            getResults = getData results [ "date", "high", "low", "text" ]
+        in
             ( { model
                 | forecast = results.forecastList
                 , notice = Nothing
-                , temperaturesData = getData results [ "date", "high", "low", "text" ]
+                , temperaturesData = getResults
               }
             , ( cmd
-                <| TemperaturesData
-                <| getData results [ "date", "high", "low", "text" ]
+                <| TemperaturesData getResults
               )
-              --Cmd.none
             )
 
         -- FetchFail
@@ -64,14 +66,21 @@ update msg model =
             , Cmd.none
             )
 
-        Increase num ->
-            ( { model | quantity = model.quantity + num }, Cmd.none )
+        ChangeQuantity str ->
+            let
+                str2int =
+                    Result.withDefault 0 (String.toInt str)
+            in
+                ( { model | quantity = model.quantity + str2int }, Cmd.none )
 
-        Decrease num ->
-            ( { model | quantity = model.quantity - num }, Cmd.none )
+        HoverCardForecast day_ ->
+            ( { model | selectedDayIdCardForecast = day_  }, sendDayIdFromCardForest day_ )
+
+        HoverGraph day_ ->
+            ( { model | selectedDayIdGraph = day_  }, Cmd.none )
 
         TemperaturesData data_ ->
-            ( { model | temperaturesData = data_ }, (getTemperaturesData data_) )
+            ( { model | temperaturesData = data_ }, (sendDataToGraphs data_) )
 
         -- NoOp
         -- return the current model

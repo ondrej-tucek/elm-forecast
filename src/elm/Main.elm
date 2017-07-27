@@ -2,9 +2,10 @@ module Main exposing (..)
 
 import Html
 
-import Model exposing (Model, Msg(..), model, subscriptions)
 import View exposing (view)
 import Update exposing (update)
+import Ports exposing (subscriptions)
+import Model exposing (Model, Msg(..), model)
 import HttpUtils.RestApi exposing (fetchForecastData)
 
 

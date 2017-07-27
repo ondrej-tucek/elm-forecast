@@ -11,12 +11,14 @@ var { color_func
 // https://addyosmani.com/resources/essentialjsdesignpatterns/book/
 var plotlyLineGraph1 = (function () {
 
-    function publicMakeGraph( dataXY ) {
+    function publicMakeGraph(dataGraph, callback) {
 
-        var myPlot = document.getElementById('lineGraph1');
+        var myPlot = document.getElementById('lineGraph1'),
+            rowItems = document.getElementById('row-items__hover');
 
-        var dataX = dataXY[0],
-            dataY = dataXY[1];
+        var dataX = dataGraph[0][0],
+            dataY = dataGraph[0][1];
+            selectedDayId = dataGraph[1];
 
         var num = dataX.length;
 
@@ -32,8 +34,10 @@ var plotlyLineGraph1 = (function () {
             maxY = Math.max.apply(null, dataY);
 
         var trace1 = {
-            x: dataX.sort(),
+            x: dataX,
             y: dataY,
+            selDayId: selectedDayId,
+
             marker: {
                 // size: 10,
                 size: marker_size,
@@ -45,7 +49,7 @@ var plotlyLineGraph1 = (function () {
                 color: marker_color
             },
             type: 'scatter',
-            text: dataXY[3],
+            text: dataGraph[0][3]
         };
 
         var layout1 = {
@@ -62,7 +66,7 @@ var plotlyLineGraph1 = (function () {
             yaxis: {
                 showgrid: true,
                 showline: true,
-                range: [0, maxY + 1],
+                range: [0, maxY + 3],
                 gridwidth: 2,
                 hoverformat: '.2f',
                 autotick: false,
@@ -82,15 +86,23 @@ var plotlyLineGraph1 = (function () {
         };
 
         var data = [trace1];
+
+
+
         Plotly.newPlot('lineGraph1', data, layout1, {displayModeBar: false});
         // Plotly.plot(myPlot, data, layout1, {displayModeBar: false});
 
 
-        myPlot.on('plotly_hover', function(data){
-            var sel_pnt = data.points[0].pointNumber;
-            marker_size[sel_pnt] = 16;
-            marker_opacity[sel_pnt] = 1;
-            marker_color[sel_pnt] = color_sel_pnt;
+        function hoverly(type_hover, selected_value){
+            if (type_hover == 'hover') {
+                marker_size[selected_value] = 16;
+                marker_opacity[selected_value] = 1;
+                marker_color[selected_value] = color_sel_pnt;
+            } else {
+                marker_size[selected_value] = 10;
+                marker_opacity[selected_value] = 1;
+                marker_color[selected_value] = color_func;
+            }
 
             var update = {
                 'marker': {
@@ -103,36 +115,43 @@ var plotlyLineGraph1 = (function () {
                     }
                 }
             };
+
             Plotly.restyle('lineGraph1', update);
+        };
+
+
+        if(rowItems){
+            rowItems.addEventListener('mouseover', hoverly('hover', data[0].selDayId), false);
+        }
+
+
+        myPlot.on('plotly_hover', function (data){
+            var selected_day = data.points[0].pointNumber;
+            hoverly('hover', selected_day);
+
+            // making sure the Callback is a function
+            if (callback && typeof(callback) === "function") {
+                callback(selected_day);
+            }
         });
 
 
         myPlot.on('plotly_unhover', function(data){
-            var sel_pnt = data.points[0].pointNumber;
-            marker_size[sel_pnt] = 10;
-            marker_opacity[sel_pnt] = 1;
-            marker_color[sel_pnt] = color_func;
+            var selected_day = data.points[0].pointNumber;
+            hoverly('unhover', selected_day);
 
-            var update = {
-                'marker': {
-                    color: marker_color,
-                    size: marker_size,
-                    opacity: marker_opacity,
-                    line: {
-                        color: marker_lin_c,
-                        width: marker_line_w
-                    }
-                }
-            };
-            Plotly.restyle('lineGraph1', update);
+            // making sure the Callback is a function
+            if (callback && typeof(callback) === "function") {
+                callback(-1);
+            }
         });
-    }
+    };
+
 
     return {
         makeGraph: publicMakeGraph
     };
 
 })();
-
 
 module.exports = plotlyLineGraph1;

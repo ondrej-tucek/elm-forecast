@@ -1,11 +1,14 @@
 module Model exposing (..)
 
-import Time exposing (Time)
 import Http
+import Time exposing (Time)
 
 import Material
 
+import Constants.DefaultSettings exposing (..)
+import Types.Graphs exposing (GraphData)
 import Types.Forecast exposing (Forecast, ForecastList)
+
 
 
 
@@ -19,8 +22,10 @@ type Msg
     | SelectMenuTab Int
     | FetchForecastData (Result Http.Error ForecastList)
     | UpdateTime Time
-    | Increase Int
-    | Decrease Int
+    | ChangeQuantity String
+    -- | HooverDay Int
+    | HoverCardForecast Int
+    | HoverGraph Int
     | TemperaturesData (List (List String))
     | NoOp
 
@@ -37,7 +42,10 @@ type alias Model =
   , lastUpdateTime : Time
   , forecast : List Forecast
   , notice : Maybe String
+  , selectedDayIdCardForecast : Int
+  , selectedDayIdGraph : Int
   , temperaturesData : List (List String)
+  -- , graphData : GraphData
 
   -- others..
   , quantity : Int
@@ -57,15 +65,11 @@ model =
   , lastUpdateTime = 0.0
   , forecast = []
   , notice = Nothing
+  , selectedDayIdCardForecast = defaultDayId
+  , selectedDayIdGraph = defaultDayId
   , temperaturesData = []
+  -- , graphData = Nothing Nothing Nothing Nothing
 
   -- others..
   , quantity = 1
   }
-
-
--- Subscriptions
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Time.every (360 * Time.minute) UpdateTime

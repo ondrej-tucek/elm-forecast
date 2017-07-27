@@ -1,6 +1,6 @@
 
 
-.quantity {
+.quantity__show {
     width: 50%;
     margin: 0 auto;
     padding: 10px 10px;
@@ -8,4 +8,12 @@
     background: #dddddd;
     border-radius: 25px;
     border: 2px solid #a1a1a1;
+}
+
+.quantity-btn--container {
+    text-align: center;
+}
+
+.quantity-btn--counter {
+    margin: 0 5px;
 }

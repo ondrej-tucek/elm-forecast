@@ -10,10 +10,10 @@ var { color_func
 // https://addyosmani.com/resources/essentialjsdesignpatterns/book/
 var plotlyBarGraph1 = (function () {
 
-    function publicMakeGraph( dataXY ) {
+    function publicMakeGraph( dataGraph ) {
 
-        var dataX = dataXY[0],
-            dataY = dataXY[1];
+        var dataX = dataGraph[0][0],
+            dataY = dataGraph[0][1];
 
         var num = dataX.length;
 

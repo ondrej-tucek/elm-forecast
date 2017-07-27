@@ -9,10 +9,12 @@ import Html exposing (..)
 import Html.Attributes exposing (class, style)
 
 import Model exposing (..)
+import Constants.Colors exposing (..)
 import View.CardForecast exposing (viewCardForecast)
-import View.ButtonQuantity exposing (viewButtonQuantity)
+import View.ButtonQuantity exposing (viewCounter)
 import View.DialogQuantity exposing (viewDialogQuantity)
 
+import Graphs.Temperature exposing (..)
 
 
 viewMenuTabs : Model -> Html Msg
@@ -31,7 +33,7 @@ viewMenuTabs model =
               , text "Counter"
               , text "Dialog"
               ]
-            , [ Color.background (Color.color Color.Teal Color.S400) ]
+            , [ Color.background defaultTabsColor ]
             )
         , main = [ viewTabsBody model ]
         }
@@ -40,7 +42,7 @@ viewMenuTabs model =
 viewHeader : Model -> Html Msg
 viewHeader model =
     Layout.row
-        [ Color.background (Color.color Color.Teal Color.S500) ]
+        [ Color.background defaultLayoutColor ]
         [ Layout.title [ css "font-size" "22px" ] [ text "Forecast weather" ]
         , Layout.spacer
         , Layout.navigation []
@@ -76,6 +78,11 @@ viewTabsBody model =
                             [ Options.div[ Options.id "barGraph1" ]
                                 [ ]
                             ]
+                        -- , Options.div [cs "graphs" ]
+                        --     [ text <| "CardForecast Hover = " ++ toString model.selectedDayIdCardForecast
+                        --     , p [] []
+                        --     , text <| "Graph Hover = " ++  toString model.selectedDayIdGraph
+                        --     ]
                         ]
                     ]
                 ]
@@ -83,7 +90,7 @@ viewTabsBody model =
             div [ class "forecast-card-container" ] (List.map (\x -> text (toString x)) [List.take 8 model.forecast])
         2 ->
             Options.div [ cs "forecast-card-container" ]
-                [ viewButtonQuantity model
+                [ viewCounter model
                 ]
         3 ->
             Options.div [ cs "forecast-card-container"
