@@ -15,7 +15,6 @@ var data = [null, null];
 
 
 function plot(data) {
-    // console.log('data> ', data);
     plotlyLineGraph1.makeGraph(data, function(dayIdFromGraph) {
         app.ports.getDayIdFromGraph.send(dayIdFromGraph);
      });
@@ -24,6 +23,7 @@ function plot(data) {
 
 app.ports.sendDayIdFromCardForest.subscribe(function(dayIdFromCardForest){
     data[1] = dayIdFromCardForest;
+
     requestAnimationFrame(function() {
         plot(data);
     });
@@ -38,6 +38,7 @@ app.ports.sendDataToGraphs.subscribe(function(dataGraph) {
         plotlyBarGraph1.makeGraph(data);
     });
 });
+
 
 // RxJS approach
 // var Rx = require('../../node_modules/rxjs/Rx');

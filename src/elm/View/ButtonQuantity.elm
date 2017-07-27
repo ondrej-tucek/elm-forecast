@@ -8,18 +8,10 @@ import Material.Options as Options exposing (cs, css, onClick, when)
 import Html exposing (..)
 
 import Model exposing (..)
+import Utils exposing (str2int)
 import Constants.Colors exposing (..)
 import Constants.DefaultSettings exposing (..)
 
-
-btnBgColor : Options.Property c m
-btnBgColor = Color.background defaultBtnBgColor
-
-btnTextColor : Options.Property c m
-btnTextColor = Color.text defaultBtnTextColor
-
-elevation : Options.Property a m
-elevation = defaultBtnElevation
 
 
 viewCounter : Model -> Html Msg
@@ -48,28 +40,27 @@ btnCounter model id_ label quantity limitQuantity =
     let
         diff =
             limitQuantity - quantity
-            
+
+        intLabel =
+            str2int label
+
         (condDisabled, condColor) =
-            case label of
-                "-3" ->
-                    (-3 < diff, -3 >= diff)
-                "-1" ->
-                    (-1 < diff, -1 >= diff)
-                "+1" ->
-                    (0 >= diff, 0 < diff)
-                "+3" ->
-                    (2 >= diff, 2 < diff)
-                _ -> (False, False)
+            if (intLabel < 0) then
+                (intLabel < diff, intLabel >= diff)
+            else if (intLabel > 0) then
+                (intLabel - 1 >= diff, intLabel - 1 < diff)
+            else
+                (False, False)
     in
         Button.render Mdl [ id_ ] model.mdl
             [ cs "quantity-btn--counter"
-            , elevation
+            , defaultBtnElevation
             , Button.raised
             , Button.ripple
             , Button.colored
             , Button.disabled |> when (condDisabled)
-            , btnTextColor |> when (condColor)
-            , btnBgColor |> when (condColor)
+            , Color.text defaultBtnTextColor |> when (condColor)
+            , Color.background defaultBtnBgColor |> when (condColor)
             , onClick (ChangeQuantity label)
             ]
             [ text label ]

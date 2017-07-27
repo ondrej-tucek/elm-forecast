@@ -11,7 +11,6 @@ import Types.Forecast exposing (Forecast, ForecastList)
 
 
 
-
 -- Msgs
 
 type alias Mdl =
@@ -23,10 +22,9 @@ type Msg
     | FetchForecastData (Result Http.Error ForecastList)
     | UpdateTime Time
     | ChangeQuantity String
-    -- | HooverDay Int
     | HoverCardForecast Int
     | HoverGraph Int
-    | TemperaturesData (List (List String))
+    | GraphDataMsg GraphData
     | NoOp
 
 
@@ -34,22 +32,21 @@ type Msg
 -- define a structure for the Model
 
 type alias Model =
-  { -- mdl components
-    mdl : Mdl
-  , selectedMenuTab : Int
+    { -- mdl components
+      mdl : Mdl
+    , selectedMenuTab : Int
 
-  -- Forecast
-  , lastUpdateTime : Time
-  , forecast : List Forecast
-  , notice : Maybe String
-  , selectedDayIdCardForecast : Int
-  , selectedDayIdGraph : Int
-  , temperaturesData : List (List String)
-  -- , graphData : GraphData
+    -- Forecast
+    , lastUpdateTime : Time
+    , forecast : List Forecast
+    , notice : Maybe String
+    , selectedDayIdCardForecast : Int
+    , selectedDayIdGraph : Int
+    , temperaturesGraphData : GraphData
 
-  -- others..
-  , quantity : Int
-  }
+    -- others..
+    , quantity : Int
+    }
 
 
 -- model
@@ -57,19 +54,26 @@ type alias Model =
 
 model : Model
 model =
-  { -- mdl components
-    mdl = Material.model
-  , selectedMenuTab = 0
+    { -- mdl components
+      mdl = Material.model
+    , selectedMenuTab = 0
 
-    -- Forecast
-  , lastUpdateTime = 0.0
-  , forecast = []
-  , notice = Nothing
-  , selectedDayIdCardForecast = defaultDayId
-  , selectedDayIdGraph = defaultDayId
-  , temperaturesData = []
-  -- , graphData = Nothing Nothing Nothing Nothing
+      -- Forecast
+    , lastUpdateTime = 0.0
+    , forecast = []
+    , notice = Nothing
+    , selectedDayIdCardForecast = defaultDayId
+    , selectedDayIdGraph = defaultDayId
+    , temperaturesGraphData =
+        { x_date = []
+        , y_high = []
+        , y_low = []
+        , text = []
+        , idSelectorRows = cssIdHoverRow
+        , idSelectorTitle = cssIdHoverTitle
+        , idSelectorGraphTemperatures = cssIdLineGraphTemperatures
+        }
 
-  -- others..
-  , quantity = 1
-  }
+    -- others..
+    , quantity = 1
+    }

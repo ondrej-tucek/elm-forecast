@@ -12,13 +12,24 @@ var { color_func
 var plotlyLineGraph1 = (function () {
 
     function publicMakeGraph(dataGraph, callback) {
+        // console.log("hej man> ", dataGraph);
 
-        var myPlot = document.getElementById('lineGraph1'),
-            rowItems = document.getElementById('row-items__hover');
+        var dataX = dataGraph[0].x_date,
+            dataY = dataGraph[0].y_high,
+            text_hover = dataGraph[0].text,
+            selected_day_id = dataGraph[1],
+            css_id_row_hover = dataGraph[0].idSelectorRows;
+            css_id_title_hover = dataGraph[0].idSelectorTitle;
+            css_id_graph_temperatures = dataGraph[0].idSelectorGraphTemperatures;
 
-        var dataX = dataGraph[0][0],
-            dataY = dataGraph[0][1];
-            selectedDayId = dataGraph[1];
+        var myPlot = document.getElementById(css_id_graph_temperatures);
+
+        if (selected_day_id == 0) {
+            hoverCardForecast = document.getElementById(css_id_title_hover);
+        } else {
+            hoverCardForecast = document.getElementById(css_id_row_hover);
+        }
+
 
         var num = dataX.length;
 
@@ -36,7 +47,7 @@ var plotlyLineGraph1 = (function () {
         var trace1 = {
             x: dataX,
             y: dataY,
-            selDayId: selectedDayId,
+            sel_day_id: selected_day_id,
 
             marker: {
                 // size: 10,
@@ -49,7 +60,7 @@ var plotlyLineGraph1 = (function () {
                 color: marker_color
             },
             type: 'scatter',
-            text: dataGraph[0][3]
+            text: text_hover
         };
 
         var layout1 = {
@@ -64,6 +75,7 @@ var plotlyLineGraph1 = (function () {
                 hoverformat: '.2f',
             },
             yaxis: {
+                title: '°C',
                 showgrid: true,
                 showline: true,
                 range: [0, maxY + 3],
@@ -89,7 +101,7 @@ var plotlyLineGraph1 = (function () {
 
 
 
-        Plotly.newPlot('lineGraph1', data, layout1, {displayModeBar: false});
+        Plotly.newPlot(css_id_graph_temperatures, data, layout1, {displayModeBar: false});
         // Plotly.plot(myPlot, data, layout1, {displayModeBar: false});
 
 
@@ -116,12 +128,12 @@ var plotlyLineGraph1 = (function () {
                 }
             };
 
-            Plotly.restyle('lineGraph1', update);
+            Plotly.restyle(css_id_graph_temperatures, update);
         };
 
 
-        if(rowItems){
-            rowItems.addEventListener('mouseover', hoverly('hover', data[0].selDayId), false);
+        if(hoverCardForecast){
+            hoverCardForecast.addEventListener('mouseover', hoverly('hover', data[0].sel_day_id), false);
         }
 
 

@@ -31,8 +31,8 @@ viewCardForecast model =
                 [ cs "row-items"
                 , onMouseEnter (HoverCardForecast dayId)
                 , onMouseLeave (HoverCardForecast defaultDayId)
-                , Options.id "row-items__hover" |> when (model.selectedDayIdCardForecast == dayId)
-                , Options.id "row-items__hover" |> when (model.selectedDayIdGraph == dayId)
+                , Options.id cssIdHoverRow |> when (model.selectedDayIdCardForecast == dayId)
+                , Options.id cssIdHoverRow |> when (model.selectedDayIdGraph == dayId)
                 ]
                 [ Options.div [ cs "item-day" ]
                     [ text day ]
@@ -65,8 +65,8 @@ viewCardForecast model =
                     [ cs "card-forecast__daily-temperature"
                     , onMouseEnter (HoverCardForecast 0)
                     , onMouseLeave (HoverCardForecast defaultDayId)
-                    , Options.id "daily-temperature__hover" |> when (model.selectedDayIdCardForecast == 0)
-                    , Options.id "daily-temperature__hover" |> when (model.selectedDayIdGraph == 0)
+                    , Options.id cssIdHoverTitle |> when (model.selectedDayIdCardForecast == 0)
+                    , Options.id cssIdHoverTitle |> when (model.selectedDayIdGraph == 0)
                     ]
                     [ Options.div
                         [ Typography.display4

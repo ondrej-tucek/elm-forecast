@@ -12,8 +12,10 @@ var plotlyBarGraph1 = (function () {
 
     function publicMakeGraph( dataGraph ) {
 
-        var dataX = dataGraph[0][0],
-            dataY = dataGraph[0][1];
+        var dataX = dataGraph[0].x_date,
+            dataY = dataGraph[0].y_high;
+            // text_hover = dataGraph[0].text;
+            // selectedDayId = dataGraph[1];
 
         var num = dataX.length;
 

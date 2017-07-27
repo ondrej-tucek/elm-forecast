@@ -24,39 +24,12 @@ getList data str =
     in
         List.map getDailyValue data.forecastList
 
--- getData : ForecastList -> List String -> List (List String)
--- getData data listr =
---     List.map (getList data) listr
 
-
--- getData : ForecastList -> List String -> GraphData
--- getData data listr =
---     List.map (getList data) listr
-
-getDate : (ForecastList -> List String)
-getDate forecastList =
-    getList forecastList "date"
-
--- type alias GraphData =
---     { x : List String
---     , y : List String
---     , text : List String
---     , selectedDayId : Int --Maybe Int
---     }
-
--- type alias MyObject =
---   { name: String
---   , displayDate: String
---   , subTitle: String
---   , hashTag: String
---   }
-
--- port check : MyObject -> Cmd msg
--- Then in the javascript you can just do this:
-
--- app.ports.check.subscribe(function(myObject) {
---             alert( myObject.name);
---             alert( myObject.displayDate);
---             alert( myObject.subTitle);
---             alert( myObject.hashTag);
---         });
+mapData : ForecastList -> GraphData -> GraphData
+mapData forecastList data =
+    { data |
+        x_date = getList forecastList "date",
+        y_high = getList forecastList "high",
+        y_low = getList forecastList "low",
+        text = getList forecastList "text"
+    }

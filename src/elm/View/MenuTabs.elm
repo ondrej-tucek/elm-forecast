@@ -10,11 +10,11 @@ import Html.Attributes exposing (class, style)
 
 import Model exposing (..)
 import Constants.Colors exposing (..)
+import Constants.DefaultSettings exposing (..)
 import View.CardForecast exposing (viewCardForecast)
 import View.ButtonQuantity exposing (viewCounter)
 import View.DialogQuantity exposing (viewDialogQuantity)
 
-import Graphs.Temperature exposing (..)
 
 
 viewMenuTabs : Model -> Html Msg
@@ -71,10 +71,15 @@ viewTabsBody model =
                         , size Phone 4
                         ]
                         [ Options.div [cs "graphs" ]
-                            [ Options.div[ Options.id "lineGraph1" ]
+                            [ Options.div[ Options.id cssIdLineGraphTemperatures ]
                                 [ ]
                             ]
-                        , Options.div [cs "graphs" ]
+                        ]
+                    , cell [ size All 4
+                        , size Tablet 4
+                        , size Phone 4
+                        ]
+                        [ Options.div [cs "graphs" ]
                             [ Options.div[ Options.id "barGraph1" ]
                                 [ ]
                             ]

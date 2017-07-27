@@ -5,21 +5,11 @@ import String exposing (
     toLower,
     dropLeft,
     dropRight,
-    left,
-    cons,
-    uncons
+    left
     )
-import Char exposing (toUpper)
 
 import Model exposing (..)
 
-
-
-toSentenceCase : String -> String
-toSentenceCase word =
-    uncons word
-        |> Maybe.map (\( head, tail ) -> cons (toUpper head) tail)
-        |> Maybe.withDefault ""
 
 
 getDayMonth : String -> String

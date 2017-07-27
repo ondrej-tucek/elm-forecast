@@ -3,8 +3,11 @@ module Types.Graphs exposing (..)
 
 
 type alias GraphData =
-    { x : Maybe (List String)
-    , y : Maybe (List String)
-    , text : Maybe (List String)
-    , selectedDayId : Maybe Int
+    { x_date : List String
+    , y_high : List String
+    , y_low : List String
+    , text : List String
+    , idSelectorRows : String
+    , idSelectorTitle : String
+    , idSelectorGraphTemperatures : String
     }

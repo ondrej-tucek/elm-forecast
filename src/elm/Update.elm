@@ -8,8 +8,7 @@ import HttpUtils.HttpErrors exposing (..)
 import HttpUtils.RestApi exposing (..)
 
 import Ports exposing (..)
-import Forecast.Temperature exposing (..)
-import Constants.DefaultSettings exposing (..)
+import Graphs.Temperature exposing (..)
 
 
 
@@ -27,37 +26,27 @@ update msg model =
                     { model | selectedMenuTab = num }
 
                 cmd_ =
-                    if num == 0 then sendDataToGraphs model.temperaturesData else Cmd.none
+                    if num == 0 then sendDataToGraphs model.temperaturesGraphData else Cmd.none
             in
                 ( model_, cmd_ )
 
         UpdateTime time ->
             { model | lastUpdateTime = time } ! [ fetchForecastData ]
 
-        -- FetchForecastData
-        -- on success of 'fetch' set the response on the model
-        -- if the reponse was an empty list,
-        -- define a notice.
-        -- set the isLoading state to False
         FetchForecastData (Ok results) ->
         let
-            getResults = getData results [ "date", "high", "low", "text" ]
+            setData = mapData results model.temperaturesGraphData
         in
             ( { model
                 | forecast = results.forecastList
                 , notice = Nothing
-                , temperaturesData = getResults
+                , temperaturesGraphData = setData
               }
             , ( cmd
-                <| TemperaturesData getResults
+                <| GraphDataMsg setData
               )
             )
 
-        -- FetchFail
-        -- on Http fail set :
-        -- the reponse as 'notice'
-        -- the isLoading state to False
-        -- result to Nothing
         FetchForecastData (Err err) ->
             ( { model
                 | forecast = []
@@ -79,12 +68,8 @@ update msg model =
         HoverGraph day_ ->
             ( { model | selectedDayIdGraph = day_  }, Cmd.none )
 
-        TemperaturesData data_ ->
-            ( { model | temperaturesData = data_ }, (sendDataToGraphs data_) )
+        GraphDataMsg data_ ->
+            ( { model | temperaturesGraphData = data_ }, sendDataToGraphs data_ )
 
-        -- NoOp
-        -- return the current model
         NoOp ->
             ( model, Cmd.none )
-
--- temperaturesData <| getData model ["date", "high", "low", "text"]
