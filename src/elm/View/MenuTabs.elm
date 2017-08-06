@@ -70,7 +70,7 @@ viewTabsBody model =
                         , size Tablet 4
                         , size Phone 4
                         ]
-                        [ Options.div [cs "graphs" ]
+                        [ Options.div [ cs "graphs" ]
                             [ Options.div[ Options.id cssIdLineGraphTemperatures ]
                                 [ ]
                             ]
@@ -79,8 +79,8 @@ viewTabsBody model =
                         , size Tablet 4
                         , size Phone 4
                         ]
-                        [ Options.div [cs "graphs" ]
-                            [ Options.div[ Options.id "barGraph1" ]
+                        [ Options.div [ cs "graphs" ]
+                            [ Options.div[ Options.id cssIdBarGraphTemperatures ]
                                 [ ]
                             ]
                         -- , Options.div [cs "graphs" ]

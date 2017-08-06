@@ -8,16 +8,24 @@ require( '../../node_modules/bootstrap-sass/assets/javascripts/bootstrap.js' ); 
 var Elm = require( '../elm/Main' );
 var app = Elm.Main.embed( document.getElementById( 'main' ) );
 
-
+var plotly = require( './js/plotlyUtils.js' );
 var plotlyLineGraph1 = require( './js/plotlyLineGraph1.js' );
 var plotlyBarGraph1 = require( './js/plotlyBarGraph1.js' );
+
+var plotlyMarker = new plotly.Marker();
 var data = [null, null];
 
 
 function plot(data) {
-    plotlyLineGraph1.makeGraph(data, function(dayIdFromGraph) {
+    marker_settings = plotlyMarker.init(data[0].x_date.length);
+
+    plotlyLineGraph1.makeGraph(data, marker_settings, function(dayIdFromGraph) {
         app.ports.getDayIdFromGraph.send(dayIdFromGraph);
-     });
+    });
+
+    plotlyBarGraph1.makeGraph(data, marker_settings, function(dayIdFromGraph) {
+        app.ports.getDayIdFromGraph.send(dayIdFromGraph);
+    });
 }
 
 
@@ -35,7 +43,6 @@ app.ports.sendDataToGraphs.subscribe(function(dataGraph) {
 
     requestAnimationFrame(function() {
         plot(data);
-        plotlyBarGraph1.makeGraph(data);
     });
 });
 

@@ -5,8 +5,8 @@
 // $width-graph: px2unit(320);
 // $hight-graph: px2unit(240);
 // $border-width: px2unit(2);
-$width-graph: 320px;
-$hight-graph: 240px;
+$width-graph: 420px;
+$hight-graph: 320px;
 $border-width: 2px;
 
 $border-card-color: black;
@@ -26,7 +26,7 @@ $border-line: solid;
     height: $hight-graph;
 }
 
-#barGraph1 {
+#barGraphTemperatures {
     width: $width-graph;
     height: $hight-graph;
 }

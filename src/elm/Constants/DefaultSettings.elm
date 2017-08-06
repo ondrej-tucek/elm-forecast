@@ -28,3 +28,8 @@ cssIdHoverTitle =
 cssIdLineGraphTemperatures : String
 cssIdLineGraphTemperatures =
     "lineGraphTemperatures"
+
+
+cssIdBarGraphTemperatures : String
+cssIdBarGraphTemperatures =
+    "barGraphTemperatures"

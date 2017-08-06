@@ -71,7 +71,10 @@ model =
         , text = []
         , idSelectorRows = cssIdHoverRow
         , idSelectorTitle = cssIdHoverTitle
-        , idSelectorGraphTemperatures = cssIdLineGraphTemperatures
+        , idSelectorGraphTemperatures =
+            { lineGraphTemperatures = cssIdLineGraphTemperatures
+            , barGraphTemperatures = cssIdBarGraphTemperatures
+            }
         }
 
     -- others..

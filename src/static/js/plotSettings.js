@@ -8,15 +8,15 @@ function define(name, value) {
 }
 
 define("color_func", '#1F77B4');
-define("color_sel_pnt", '#C54C82');
+define("color_sel_val", '#C54C82');
 define("color_lin_c", '#343436');
 define("color_bg_paper", '#7f7f7f');
 define("color_bg_plot", '#c7c7c7');
 
-define("margin_l", 30);
+define("margin_l", 60);
 define("margin_r", 30);
-define("margin_b", 30);
-define("margin_t", 30);
+define("margin_b", 60);
+define("margin_t", 50);
 define("margin_pad", 4);
 
 

@@ -9,5 +9,11 @@ type alias GraphData =
     , text : List String
     , idSelectorRows : String
     , idSelectorTitle : String
-    , idSelectorGraphTemperatures : String
+    , idSelectorGraphTemperatures : CssIdGraph
+    }
+
+
+type alias CssIdGraph =
+    { lineGraphTemperatures : String
+    , barGraphTemperatures : String
     }

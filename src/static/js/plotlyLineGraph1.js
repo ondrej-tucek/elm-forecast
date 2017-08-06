@@ -1,5 +1,5 @@
 var { color_func
-    , color_sel_pnt
+    , color_sel_val
     , color_lin_c
     , margin_l
     , margin_r
@@ -7,12 +7,14 @@ var { color_func
     , margin_t
     } = require( './plotSettings.js' );
 
+var plotly = require( './plotlyUtils.js' );
+var plotlyShow = new plotly.Marker();
+
 
 // https://addyosmani.com/resources/essentialjsdesignpatterns/book/
 var plotlyLineGraph1 = (function () {
 
-    function publicMakeGraph(dataGraph, callback) {
-        // console.log("hej man> ", dataGraph);
+    function publicMakeGraph(dataGraph, marker_, callback) {
 
         var dataX = dataGraph[0].x_date,
             dataY = dataGraph[0].y_high,
@@ -20,24 +22,11 @@ var plotlyLineGraph1 = (function () {
             selected_day_id = dataGraph[1],
             css_id_row_hover = dataGraph[0].idSelectorRows;
             css_id_title_hover = dataGraph[0].idSelectorTitle;
-            css_id_graph_temperatures = dataGraph[0].idSelectorGraphTemperatures;
+            css_id_graphs = dataGraph[0].idSelectorGraphTemperatures;
 
-        var myPlot = document.getElementById(css_id_graph_temperatures);
-
-        if (selected_day_id == 0) {
-            hoverCardForecast = document.getElementById(css_id_title_hover);
-        } else {
-            hoverCardForecast = document.getElementById(css_id_row_hover);
-        }
-
+        var linePlot = document.getElementById(css_id_graphs.lineGraphTemperatures);
 
         var num = dataX.length;
-
-        var marker_size = Array(num).fill(10),
-            marker_lin_c = Array(num).fill(color_lin_c),
-            marker_line_w = Array(num).fill(1.5),
-            marker_opacity = Array(num).fill(1),
-            marker_color = Array(num).fill(color_func);
 
         var minX = dataX[0],
             maxX = dataX[num-1],
@@ -45,101 +34,86 @@ var plotlyLineGraph1 = (function () {
             maxY = Math.max.apply(null, dataY);
 
         var trace1 = {
-            x: dataX,
-            y: dataY,
-            sel_day_id: selected_day_id,
-
-            marker: {
-                // size: 10,
-                size: marker_size,
-                line: {
-                    color: marker_lin_c,
-                    width: marker_line_w
-                },
-                opacity: marker_opacity,
-                color: marker_color
-            },
-            type: 'scatter',
-            text: text_hover
-        };
-
-        var layout1 = {
-            xaxis: {
-                nticks: 10,
-                showgrid: true,
-                showline: true,
-                rangemode: 'tozero',
-                // range: [minX - 1, maxX + 1],
-                range: [-0.5, 9.5],
-                gridwidth: 1,
-                hoverformat: '.2f',
-            },
-            yaxis: {
-                title: '°C',
-                showgrid: true,
-                showline: true,
-                range: [0, maxY + 3],
-                gridwidth: 2,
-                hoverformat: '.2f',
-                autotick: false,
-                tick0: 0,
-                dtick: 5,
-            },
-            margin: {
-                l: margin_l,
-                r: margin_r,
-                b: margin_b,
-                t: margin_t,
-                // pad: margin_pad
-            },
-            hovermode:'closest',
-            // paper_bgcolor: bgcolor_paper,
-            // plot_bgcolor: bgcolor_plot
-        };
+                type: 'scatter',
+                text: text_hover,
+                x: dataX.map(function(val) {
+                    return val.substring(0,6);
+                }),
+                y: dataY,
+                sel_day_id: selected_day_id,
+                marker: marker_
+            };
 
         var data = [trace1];
 
-
-
-        Plotly.newPlot(css_id_graph_temperatures, data, layout1, {displayModeBar: false});
-        // Plotly.plot(myPlot, data, layout1, {displayModeBar: false});
-
-
-        function hoverly(type_hover, selected_value){
-            if (type_hover == 'hover') {
-                marker_size[selected_value] = 16;
-                marker_opacity[selected_value] = 1;
-                marker_color[selected_value] = color_sel_pnt;
-            } else {
-                marker_size[selected_value] = 10;
-                marker_opacity[selected_value] = 1;
-                marker_color[selected_value] = color_func;
-            }
-
-            var update = {
-                'marker': {
-                    color: marker_color,
-                    size: marker_size,
-                    opacity: marker_opacity,
-                    line: {
-                        color: marker_lin_c,
-                        width: marker_line_w
+        var layout = {
+                xaxis: {
+                    tickangle: 45,
+                    nticks: 10,
+                    showgrid: true,
+                    showline: true,
+                    rangemode: 'tozero',
+                    // range: [minX - 1, maxX + 1],
+                    range: [-0.5, 9.5],
+                    gridwidth: 1,
+                    hoverformat: '.2f',
+                },
+                yaxis: {
+                    title: 'Temperature',
+                    showgrid: true,
+                    showline: true,
+                    range: [0, maxY + 3],
+                    gridwidth: 2,
+                    hoverformat: '.2f',
+                    autotick: false,
+                    tick0: 0,
+                    dtick: 5,
+                },
+                margin: {
+                    l: margin_l,
+                    r: margin_r,
+                    b: margin_b,
+                    t: margin_t,
+                    // pad: margin_pad
+                },
+                hovermode:'closest',
+                // paper_bgcolor: bgcolor_paper,
+                // plot_bgcolor: bgcolor_plot
+                annotations: [
+                    // {
+                    //     xref: 'paper',
+                    //     yref: 'paper',
+                    //     x: 1,
+                    //     xanchor: 'right',
+                    //     y: 0,
+                    //     yanchor: 'bottom',
+                    //     text: 'X axis label',
+                    //     showarrow: false
+                    // },
+                    {
+                        xref: 'paper',
+                        yref: 'paper',
+                        x: 0,
+                        xanchor: 'right',
+                        y: 1,
+                        yanchor: 'bottom',
+                        text: '[°C]',
+                        showarrow: false
                     }
-                }
+                ]
             };
 
-            Plotly.restyle(css_id_graph_temperatures, update);
-        };
+        Plotly.newPlot(
+            css_id_graphs.lineGraphTemperatures,
+            data,
+            layout,
+            {displayModeBar: false}
+        );
 
 
-        if(hoverCardForecast){
-            hoverCardForecast.addEventListener('mouseover', hoverly('hover', data[0].sel_day_id), false);
-        }
-
-
-        myPlot.on('plotly_hover', function (data){
+        linePlot.on('plotly_hover', function (data){
             var selected_day = data.points[0].pointNumber;
-            hoverly('hover', selected_day);
+            plotlyShow.hoverly('hover', selected_day, marker_, css_id_graphs);
 
             // making sure the Callback is a function
             if (callback && typeof(callback) === "function") {
@@ -148,17 +122,32 @@ var plotlyLineGraph1 = (function () {
         });
 
 
-        myPlot.on('plotly_unhover', function(data){
+        linePlot.on('plotly_unhover', function(data){
             var selected_day = data.points[0].pointNumber;
-            hoverly('unhover', selected_day);
+            plotlyShow.hoverly('unhover', selected_day, marker_, css_id_graphs);
 
             // making sure the Callback is a function
             if (callback && typeof(callback) === "function") {
                 callback(-1);
             }
         });
-    };
 
+
+        if (selected_day_id == 0) {
+            hoverCardForecast = document.getElementById(css_id_title_hover);
+        } else {
+            hoverCardForecast = document.getElementById(css_id_row_hover);
+        }
+
+        
+        if (hoverCardForecast) {
+            hoverCardForecast.addEventListener(
+                'mouseover',
+                plotlyShow.hoverly('hover', data[0].sel_day_id, marker_, css_id_graphs),
+                false
+            );
+        }
+    };
 
     return {
         makeGraph: publicMakeGraph
