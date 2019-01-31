@@ -1,30 +1,22 @@
-module Decoders.Forecast exposing (..)
+module Decoders.Forecast exposing (decodeForecast, decodeForecastList)
 
-import Json.Decode as Decode exposing (int, string, float, list, Decoder)
+import Json.Decode as Decode exposing (Decoder, float, int, list, string)
 import Json.Decode.Pipeline as Pipe exposing (decode, required)
-
 import Types.Forecast exposing (..)
-
-
-
-forecastPath : List String
-forecastPath =
-    ["query", "results", "channel", "item", "forecast"]
 
 
 decodeForecastList : Decoder ForecastList
 decodeForecastList =
     decode ForecastList
-        |> Pipe.requiredAt forecastPath (list decodeForecast)
+        |> Pipe.required "forecasts" (list decodeForecast)
 
 
 decodeForecast : Decoder Forecast
 decodeForecast =
     decode Forecast
-        |> Pipe.requiredAt ["code"] string
-        |> Pipe.requiredAt ["date"] string
-        |> Pipe.requiredAt ["day"] string
-        |> Pipe.requiredAt ["high"] string
-        |> Pipe.requiredAt ["low"] string
-        |> Pipe.requiredAt ["text"] string
-        
+        |> Pipe.required "code" string
+        |> Pipe.required "date" string
+        |> Pipe.required "day" string
+        |> Pipe.required "high" string
+        |> Pipe.required "low" string
+        |> Pipe.required "text" string

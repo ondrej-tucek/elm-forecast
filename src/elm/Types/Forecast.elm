@@ -1,5 +1,4 @@
-module Types.Forecast exposing (..)
-
+module Types.Forecast exposing (Forecast, ForecastList)
 
 
 type alias ForecastList =

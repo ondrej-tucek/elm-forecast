@@ -1,31 +1,25 @@
-module HttpUtils.RestApi exposing (..)
+module HttpUtils.RestApi exposing (fetchForecastData, getForecastData)
 
-import Http
-
-import Types.Forecast exposing (..)
 import Decoders.Forecast exposing (..)
+import Http
 import Model exposing (..)
+import Types.Forecast exposing (..)
+
 
 
 -- API doc
 -- https://developer.yahoo.com/weather/documentation.html
+
+
 getForecastData : Http.Request ForecastList
 getForecastData =
     let
---     woeid=796166 Plzne
-        w =
-            "796166"
-
         urlApi =
-                "https://query.yahooapis.com/v1/public/yql"
-                    ++ "?q=select * from weather.forecast where woeid="
-                    ++ w
-                    ++ " and u='c'"
-                    ++ "&format=json"
+            "https://gist.githubusercontent.com/ondrej-tucek/b150bd0cfa5fd3edfefc426663fd661e/raw/4fd6fad7383eb2927c00f1cebccfedca8036b87b/weather_data.json"
     in
-        -- Http.get "http://localhost:8080/data.json" decodeForecastData
-        -- Http.get "e:/projects/../elm-weather-app/elm/data.json" usersDecoder
-        Http.get urlApi decodeForecastList
+    -- Http.get "http://localhost:8080/weather_data.json" decodeForecastList
+    -- Http.get "e:/projects/../elm-weather-app/elm/data.json" decodeForecastList
+    Http.get urlApi decodeForecastList
 
 
 fetchForecastData : Cmd Msg
